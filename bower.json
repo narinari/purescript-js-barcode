@@ -1,0 +1,31 @@
+{
+  "name": "purescript-js-barcode",
+  "license": "MIT",
+  "authors": [
+    "narinari <narinari.t@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/narinari/purescript-js-barcode.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output",
+    "test",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-console": "^1.0.0",
+    "purescript-foreign": "^1.0.0",
+    "purescript-dom": "^2.0.0",
+    "jsbarcode": "^3.5.4",
+    "purescript-css": "^1.1.0",
+    "purescript-functions": "^1.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^1.0.0"
+  }
+}
