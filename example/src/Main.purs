@@ -4,7 +4,6 @@ import Graphics.JsBarcode
 import CSS (rgb)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE)
-import Control.Monad.Except (runExcept)
 import DOM (DOM)
 import DOM.Event.Types (EventType(EventType))
 import DOM.HTML (window)
@@ -13,12 +12,10 @@ import DOM.HTML.Window (document)
 import DOM.Node.NonElementParentNode (getElementById)
 import DOM.Node.Types (ElementId(ElementId))
 import Data.Either (either)
-import Data.Foreign (toForeign)
-import Data.Foreign.Class (read)
 import Data.Maybe (Maybe(Nothing))
 import Data.Nullable (toMaybe)
 import Data.Traversable (sequence)
-import Prelude (Unit, bind, void, pure, const, (<*>), (<$>), ($), (<<<), (=<<), (>>=))
+import Prelude (Unit, bind, void, pure, const, (<*>), (<$>), ($), (>>=))
 
 foreign import onLoad :: forall eff. Eff eff Unit -> Eff eff Unit
 
@@ -33,10 +30,10 @@ main = onLoad $ void $ do
 
   let janCode = pure "012345678912"
   sequence $ mkJsBarcodeSimple
-    <$> ((eitherToMaybe <<< runExcept <<< read <<< toForeign) =<< barcode1Elm)
+    <$> barcode1Elm
     <*> janCode
   sequence $ mkJsBarcode
-    <$> ((eitherToMaybe <<< runExcept <<< read <<< toForeign) =<< barcode2Elm)
+    <$> barcode2Elm
     <*> janCode
     <*> pure defaultConfig { format = EAN13, background = rgb 200 200 250 }
 

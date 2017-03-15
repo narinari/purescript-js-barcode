@@ -1,4 +1,4 @@
-module Graphics.JsBarcode 
+module Graphics.JsBarcode
   ( mkJsBarcode
   , mkJsBarcodeSimple
   , module Graphics.JsBarcode.Types
@@ -8,7 +8,7 @@ import Graphics.JsBarcode.Types (Config, JsBarcode, Format(..), defaultConfig, t
 import CSS.Color (cssStringRGBA)
 import Control.Monad.Eff (Eff)
 import DOM (DOM)
-import DOM.HTML.Types (HTMLCanvasElement)
+import DOM.Node.Types (Element)
 import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Data.Foreign (Foreign)
 import Data.Foreign.Class (write)
@@ -36,10 +36,10 @@ type RawConfig =
 	, marginRight :: Foreign
   }
 
-foreign import mkJsBarcodeImpl :: forall eff. Fn3 HTMLCanvasElement String RawConfig (Eff (dom :: DOM | eff) Unit)
-foreign import mkJsBarcodeSimpleImpl :: forall eff. Fn2 HTMLCanvasElement String (Eff (dom :: DOM | eff) Unit)
+foreign import mkJsBarcodeImpl :: forall eff. Fn3 Element String RawConfig (Eff (dom :: DOM | eff) Unit)
+foreign import mkJsBarcodeSimpleImpl :: forall eff. Fn2 Element String (Eff (dom :: DOM | eff) Unit)
 
-mkJsBarcode :: forall eff. HTMLCanvasElement -> String -> Config -> Eff (dom :: DOM | eff) Unit
+mkJsBarcode :: forall eff. Element -> String -> Config -> Eff (dom :: DOM | eff) Unit
 mkJsBarcode elm value =
   runFn3 mkJsBarcodeImpl elm value <<< toRawConfig
   where
@@ -64,5 +64,5 @@ mkJsBarcode elm value =
     , marginRight: write (Undefined config.marginRight)
     }
 
-mkJsBarcodeSimple :: forall eff. HTMLCanvasElement -> String -> Eff (dom :: DOM | eff) Unit
+mkJsBarcodeSimple :: forall eff. Element -> String -> Eff (dom :: DOM | eff) Unit
 mkJsBarcodeSimple = runFn2 mkJsBarcodeSimpleImpl
