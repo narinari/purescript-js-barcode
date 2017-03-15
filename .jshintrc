@@ -1,4 +1,5 @@
 {
+  "node": true,
   "bitwise": true,
   "eqeqeq": true,
   "forin": true,
